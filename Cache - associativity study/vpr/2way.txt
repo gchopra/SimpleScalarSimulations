@@ -1,0 +1,262 @@
+sim-cache: SimpleScalar/PISA Tool Set version 3.0 of August, 2003.
+Copyright (c) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
+All Rights Reserved. This version of SimpleScalar is licensed for academic
+non-commercial use.  No portion of this work may be used by any commercial
+entity, or for any commercial purpose, without the prior written permission
+of SimpleScalar, LLC (info@simplescalar.com).
+
+sim: command line: simplesim-3.0/sim-cache -cache:dl1 dl1:512:32:2:l -cache:dl2 none -cache:il2 none -max:inst 2000000000 ../Downloads/benchmarks/vpr/vpr.ss ../Downloads/benchmarks/vpr/net.in ../Downloads/benchmarks/vpr/arch.in ../Downloads/benchmarks/vpr/place.in ../Downloads/benchmarks/vpr/route.out -nodisp -route_only -route_chan_width 15 -pres_fac_mult 2 -acc_fac 1 -first_iter_pres_fac 4 -initial_pres_fac 8 
+
+sim: simulation started @ Wed May 14 23:34:16 2014, options follow:
+
+sim-cache: This simulator implements a functional cache simulator.  Cache
+statistics are generated for a user-selected cache and TLB configuration,
+which may include up to two levels of instruction and data cache (with any
+levels unified), and one level of instruction and data TLBs.  No timing
+information is generated.
+
+# -config                     # load configuration from a file
+# -dumpconfig                 # dump configuration to a file
+# -h                    false # print help message    
+# -v                    false # verbose operation     
+# -d                    false # enable debug message  
+# -i                    false # start in Dlite debugger
+-seed                       1 # random number generator seed (0 for timer seed)
+# -q                    false # initialize and terminate immediately
+# -chkpt               <null> # restore EIO trace execution from <fname>
+# -redir:sim           <null> # redirect simulator output to file (non-interactive only)
+# -redir:prog          <null> # redirect simulated program output to file
+-nice                       0 # simulator scheduling priority
+-max:inst          2000000000 # maximum number of inst's to execute
+-cache:dl1       dl1:512:32:2:l # l1 data cache config, i.e., {<config>|none}
+-cache:dl2               none # l2 data cache config, i.e., {<config>|none}
+-cache:il1       il1:256:32:1:l # l1 inst cache config, i.e., {<config>|dl1|dl2|none}
+-cache:il2               none # l2 instruction cache config, i.e., {<config>|dl2|none}
+-tlb:itlb        itlb:16:4096:4:l # instruction TLB config, i.e., {<config>|none}
+-tlb:dtlb        dtlb:32:4096:4:l # data TLB config, i.e., {<config>|none}
+-flush                  false # flush caches on system calls
+-cache:icompress        false # convert 64-bit inst addresses to 32-bit inst equivalents
+# -pcstat              <null> # profile stat(s) against text addr's (mult uses ok)
+
+  The cache config parameter <config> has the following format:
+
+    <name>:<nsets>:<bsize>:<assoc>:<repl>
+
+    <name>   - name of the cache being defined
+    <nsets>  - number of sets in the cache
+    <bsize>  - block size of the cache
+    <assoc>  - associativity of the cache
+    <repl>   - block replacement strategy, 'l'-LRU, 'f'-FIFO, 'r'-random
+
+    Examples:   -cache:dl1 dl1:4096:32:1:l
+                -dtlb dtlb:128:4096:32:r
+
+  Cache levels can be unified by pointing a level of the instruction cache
+  hierarchy at the data cache hiearchy using the "dl1" and "dl2" cache
+  configuration arguments.  Most sensible combinations are supported, e.g.,
+
+    A unified l2 cache (il2 is pointed at dl2):
+      -cache:il1 il1:128:64:1:l -cache:il2 dl2
+      -cache:dl1 dl1:256:32:1:l -cache:dl2 ul2:1024:64:2:l
+
+    Or, a fully unified cache hierarchy (il1 pointed at dl1):
+      -cache:il1 dl1
+      -cache:dl1 ul1:256:32:1:l -cache:dl2 ul2:1024:64:2:l
+
+
+
+sim: ** starting functional simulation w/ caches **
+
+
+VPR FPGA Placement and Routing Program Version 4.00-spec
+Source completed August 19, 1997.
+
+
+General Options:
+	Routing will be performed on an existing placement.
+
+Routing Options:
+	Combined GLOBAL + DETAILED routing will be performed.
+	The router will try at most 30 iterations.
+	Routings can go at most 3 channels outside their bounding box.
+	Cost of a bend (bend_cost) is 0.
+	First iteration sharing penalty factor (first_iter_pres_fac): 4
+	Initial (2nd iter.) sharing penalty factor (initial_pres_fac): 8
+	Sharing penalty growth factor (pres_fac_mult): 2
+	Accumulated sharing penalty factor (acc_fac): 1
+	Router will attempt routing only with a channel width factor of 15.
+
+Reading the FPGA architectural description from ../Downloads/benchmarks/vpr/arch.in.
+Successfully read ../Downloads/benchmarks/vpr/arch.in.
+Pins per clb: 6.  Pads per row/column: 2.
+Subblocks per clb: 1.  Subblock LUT size: 4.
+Fc value is fraction of tracks in a channel.
+Fc_output: 1.  Fc_input: 1.  Fc_pad: 1.
+Switch block type: Subset.
+Distinct types of segments: 3.
+Distinct types of user-specified switches: 3.
+
+Reading the circuit netlist from ../Downloads/benchmarks/vpr/net.in.
+Successfully read ../Downloads/benchmarks/vpr/net.in.
+404 blocks, 339 nets, 0 global nets.
+274 clbs, 65 inputs, 65 outputs.
+The circuit will be mapped into a 17 x 17 array of clbs.
+
+Reading the placement from file ../Downloads/benchmarks/vpr/place.in.
+Warning:  Placement generated with netlist file net.in:
+current net file is ../Downloads/benchmarks/vpr/net.in.
+Warning:  Placement generated with architecture file arch.in:
+current architecture file is ../Downloads/benchmarks/vpr/arch.in.
+Successfully read ../Downloads/benchmarks/vpr/place.in.
+Placement cost is 29.413677.
+
+Completed placement consistency check successfully.
+
+
+Attempting routing with a width factor (usually maximum channel width) of 15.
+Successfully routed after 3 routing iterations.
+
+Checking to ensure routing is legal ...
+Completed routing consistency check successfully.
+
+Serial number (magic cookie) for the routing is: -165589951
+Circuit successfully routed with a channel width factor of 15.
+
+
+Average number of bends per net: 3.191741  Maximum # of bends: 18
+
+Wirelength results (all in units of 1 clb segments):
+	Total wirelength: 3349   Average net length: 9.879056
+	Maximum net length: 52
+
+Wirelength results in terms of physical segments:
+	Total wiring segments used: 3011   Av. wire segments per net: 8.882006
+	Maximum segments used by a net: 52
+
+
+X - Directed channels:
+
+j	max occ	av_occ		capacity
+0	8	5.529412	15
+1	7	5.176471	15
+2	9	5.411765	15
+3	10	6.647059	15
+4	9	6.588235	15
+5	9	6.294117	15
+6	8	6.000000	15
+7	10	6.764706	15
+8	8	5.117647	15
+9	7	5.705883	15
+10	9	6.529412	15
+11	10	6.941176	15
+12	9	6.764706	15
+13	8	6.000000	15
+14	11	5.588235	15
+15	9	6.117647	15
+16	5	3.705882	15
+17	7	4.705883	15
+
+Y - Directed channels:
+
+i	max occ	av_occ		capacity
+0	8	4.294117	15
+1	7	4.470588	15
+2	7	5.294117	15
+3	9	5.352941	15
+4	6	4.176471	15
+5	9	6.294117	15
+6	10	6.823529	15
+7	9	5.764706	15
+8	8	6.117647	15
+9	8	4.470588	15
+10	8	6.058824	15
+11	7	4.411765	15
+12	7	5.294117	15
+13	9	5.588235	15
+14	9	5.176471	15
+15	6	4.000000	15
+16	7	3.117647	15
+17	8	4.705883	15
+
+Total Tracks in X-direction: 270  in Y-direction: 270
+
+
+Routing area (in minimum width transistor areas):
+Assuming no buffer sharing (pessimistic). Total: 662149.00000  Per clb: 2291.17310
+Assuming buffer sharing (slightly optimistic). Total: 518350.40625  Per clb: 1793.59998
+
+
+Segment usage by type (index):
+Segment type       Fractional utilization
+------------       ----------------------
+       0                   0.55
+       1                   0.21
+       2                   0.05
+
+Segment usage by length:
+Segment length       Fractional utilization
+--------------       ----------------------
+        1                    0.55
+        2                    0.21
+        4                    0.05
+
+sim: ** simulation statistics **
+sim_num_insn              710408115 # total number of instructions executed
+sim_num_refs              285544971 # total number of loads and stores executed
+sim_elapsed_time                 43 # total simulation time in seconds
+sim_inst_rate          16521118.9535 # simulation speed (in insts/sec)
+il1.accesses              710408115 # total number of accesses
+il1.hits                  706186028 # total number of hits
+il1.misses                  4222087 # total number of misses
+il1.replacements            4221831 # total number of replacements
+il1.writebacks                    0 # total number of writebacks
+il1.invalidations                 0 # total number of invalidations
+il1.miss_rate                0.0059 # miss rate (i.e., misses/ref)
+il1.repl_rate                0.0059 # replacement rate (i.e., repls/ref)
+il1.wb_rate                  0.0000 # writeback rate (i.e., wrbks/ref)
+il1.inv_rate                 0.0000 # invalidation rate (i.e., invs/ref)
+dl1.accesses              293780636 # total number of accesses
+dl1.hits                  283477983 # total number of hits
+dl1.misses                 10302653 # total number of misses
+dl1.replacements           10301629 # total number of replacements
+dl1.writebacks              4136974 # total number of writebacks
+dl1.invalidations                 0 # total number of invalidations
+dl1.miss_rate                0.0351 # miss rate (i.e., misses/ref)
+dl1.repl_rate                0.0351 # replacement rate (i.e., repls/ref)
+dl1.wb_rate                  0.0141 # writeback rate (i.e., wrbks/ref)
+dl1.inv_rate                 0.0000 # invalidation rate (i.e., invs/ref)
+itlb.accesses             710408115 # total number of accesses
+itlb.hits                 710408030 # total number of hits
+itlb.misses                      85 # total number of misses
+itlb.replacements                21 # total number of replacements
+itlb.writebacks                   0 # total number of writebacks
+itlb.invalidations                0 # total number of invalidations
+itlb.miss_rate               0.0000 # miss rate (i.e., misses/ref)
+itlb.repl_rate               0.0000 # replacement rate (i.e., repls/ref)
+itlb.wb_rate                 0.0000 # writeback rate (i.e., wrbks/ref)
+itlb.inv_rate                0.0000 # invalidation rate (i.e., invs/ref)
+dtlb.accesses             293780636 # total number of accesses
+dtlb.hits                 293556461 # total number of hits
+dtlb.misses                  224175 # total number of misses
+dtlb.replacements            224047 # total number of replacements
+dtlb.writebacks               64934 # total number of writebacks
+dtlb.invalidations                0 # total number of invalidations
+dtlb.miss_rate               0.0008 # miss rate (i.e., misses/ref)
+dtlb.repl_rate               0.0008 # replacement rate (i.e., repls/ref)
+dtlb.wb_rate                 0.0002 # writeback rate (i.e., wrbks/ref)
+dtlb.inv_rate                0.0000 # invalidation rate (i.e., invs/ref)
+ld_text_base             0x00400000 # program text (code) segment base
+ld_text_size                 354816 # program text (code) size in bytes
+ld_data_base             0x10000000 # program initialized data segment base
+ld_data_size                  39648 # program init'ed `.data' and uninit'ed `.bss' size in bytes
+ld_stack_base            0x7fffc000 # program stack segment base (highest address in stack)
+ld_stack_size                 16384 # program initial stack size
+ld_prog_entry            0x00400140 # program entry point (initial PC)
+ld_environ_base          0x7fff8000 # program environment base address address
+ld_target_big_endian              0 # target executable endian-ness, non-zero if big endian
+mem.page_count                  467 # total number of pages allocated
+mem.page_mem                  1868k # total size of memory pages allocated
+mem.ptab_misses                 467 # total first level page table misses
+mem.ptab_accesses        3431402084 # total page table accesses
+mem.ptab_miss_rate           0.0000 # first level page table miss rate
+
