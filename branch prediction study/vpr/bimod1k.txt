@@ -1,0 +1,210 @@
+sim-bpred: SimpleScalar/PISA Tool Set version 3.0 of August, 2003.
+Copyright (c) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
+All Rights Reserved. This version of SimpleScalar is licensed for academic
+non-commercial use.  No portion of this work may be used by any commercial
+entity, or for any commercial purpose, without the prior written permission
+of SimpleScalar, LLC (info@simplescalar.com).
+
+sim: command line: simplesim-3.0/sim-bpred -bpred bimod -bpred:bimod 1024 -max:inst 2000000000 ../Downloads/benchmarks/vpr/vpr.ss ../Downloads/benchmarks/vpr/net.in ../Downloads/benchmarks/vpr/arch.in ../Downloads/benchmarks/vpr/place.in ../Downloads/benchmarks/vpr/route.out -nodisp -route_only -route_chan_width 15 -pres_fac_mult 2 -acc_fac 1 -first_iter_pres_fac 4 -initial_pres_fac 8 
+
+sim: simulation started @ Thu May 15 13:21:57 2014, options follow:
+
+sim-bpred: This simulator implements a branch predictor analyzer.
+
+# -config                     # load configuration from a file
+# -dumpconfig                 # dump configuration to a file
+# -h                    false # print help message    
+# -v                    false # verbose operation     
+# -d                    false # enable debug message  
+# -i                    false # start in Dlite debugger
+-seed                       1 # random number generator seed (0 for timer seed)
+# -q                    false # initialize and terminate immediately
+# -chkpt               <null> # restore EIO trace execution from <fname>
+# -redir:sim           <null> # redirect simulator output to file (non-interactive only)
+# -redir:prog          <null> # redirect simulated program output to file
+-nice                       0 # simulator scheduling priority
+-max:inst          2000000000 # maximum number of inst's to execute
+-bpred                  bimod # branch predictor type {nottaken|taken|bimod|2lev|comb}
+-bpred:bimod     1024 # bimodal predictor config (<table size>)
+-bpred:2lev      1 1024 8 0 # 2-level predictor config (<l1size> <l2size> <hist_size> <xor>)
+-bpred:comb      1024 # combining predictor config (<meta_table_size>)
+-bpred:ras                  8 # return address stack size (0 for no return stack)
+-bpred:btb       512 4 # BTB config (<num_sets> <associativity>)
+
+  Branch predictor configuration examples for 2-level predictor:
+    Configurations:   N, M, W, X
+      N   # entries in first level (# of shift register(s))
+      W   width of shift register(s)
+      M   # entries in 2nd level (# of counters, or other FSM)
+      X   (yes-1/no-0) xor history and address for 2nd level index
+    Sample predictors:
+      GAg     : 1, W, 2^W, 0
+      GAp     : 1, W, M (M > 2^W), 0
+      PAg     : N, W, 2^W, 0
+      PAp     : N, W, M (M == 2^(N+W)), 0
+      gshare  : 1, W, 2^W, 1
+  Predictor `comb' combines a bimodal and a 2-level predictor.
+
+
+
+sim: ** starting functional simulation w/ predictors **
+
+
+VPR FPGA Placement and Routing Program Version 4.00-spec
+Source completed August 19, 1997.
+
+
+General Options:
+	Routing will be performed on an existing placement.
+
+Routing Options:
+	Combined GLOBAL + DETAILED routing will be performed.
+	The router will try at most 30 iterations.
+	Routings can go at most 3 channels outside their bounding box.
+	Cost of a bend (bend_cost) is 0.
+	First iteration sharing penalty factor (first_iter_pres_fac): 4
+	Initial (2nd iter.) sharing penalty factor (initial_pres_fac): 8
+	Sharing penalty growth factor (pres_fac_mult): 2
+	Accumulated sharing penalty factor (acc_fac): 1
+	Router will attempt routing only with a channel width factor of 15.
+
+Reading the FPGA architectural description from ../Downloads/benchmarks/vpr/arch.in.
+Successfully read ../Downloads/benchmarks/vpr/arch.in.
+Pins per clb: 6.  Pads per row/column: 2.
+Subblocks per clb: 1.  Subblock LUT size: 4.
+Fc value is fraction of tracks in a channel.
+Fc_output: 1.  Fc_input: 1.  Fc_pad: 1.
+Switch block type: Subset.
+Distinct types of segments: 3.
+Distinct types of user-specified switches: 3.
+
+Reading the circuit netlist from ../Downloads/benchmarks/vpr/net.in.
+Successfully read ../Downloads/benchmarks/vpr/net.in.
+404 blocks, 339 nets, 0 global nets.
+274 clbs, 65 inputs, 65 outputs.
+The circuit will be mapped into a 17 x 17 array of clbs.
+
+Reading the placement from file ../Downloads/benchmarks/vpr/place.in.
+Warning:  Placement generated with netlist file net.in:
+current net file is ../Downloads/benchmarks/vpr/net.in.
+Warning:  Placement generated with architecture file arch.in:
+current architecture file is ../Downloads/benchmarks/vpr/arch.in.
+Successfully read ../Downloads/benchmarks/vpr/place.in.
+Placement cost is 29.413677.
+
+Completed placement consistency check successfully.
+
+
+Attempting routing with a width factor (usually maximum channel width) of 15.
+Successfully routed after 3 routing iterations.
+
+Checking to ensure routing is legal ...
+Completed routing consistency check successfully.
+
+Serial number (magic cookie) for the routing is: -165589951
+Circuit successfully routed with a channel width factor of 15.
+
+
+Average number of bends per net: 3.191741  Maximum # of bends: 18
+
+Wirelength results (all in units of 1 clb segments):
+	Total wirelength: 3349   Average net length: 9.879056
+	Maximum net length: 52
+
+Wirelength results in terms of physical segments:
+	Total wiring segments used: 3011   Av. wire segments per net: 8.882006
+	Maximum segments used by a net: 52
+
+
+X - Directed channels:
+
+j	max occ	av_occ		capacity
+0	8	5.529412	15
+1	7	5.176471	15
+2	9	5.411765	15
+3	10	6.647059	15
+4	9	6.588235	15
+5	9	6.294117	15
+6	8	6.000000	15
+7	10	6.764706	15
+8	8	5.117647	15
+9	7	5.705883	15
+10	9	6.529412	15
+11	10	6.941176	15
+12	9	6.764706	15
+13	8	6.000000	15
+14	11	5.588235	15
+15	9	6.117647	15
+16	5	3.705882	15
+17	7	4.705883	15
+
+Y - Directed channels:
+
+i	max occ	av_occ		capacity
+0	8	4.294117	15
+1	7	4.470588	15
+2	7	5.294117	15
+3	9	5.352941	15
+4	6	4.176471	15
+5	9	6.294117	15
+6	10	6.823529	15
+7	9	5.764706	15
+8	8	6.117647	15
+9	8	4.470588	15
+10	8	6.058824	15
+11	7	4.411765	15
+12	7	5.294117	15
+13	9	5.588235	15
+14	9	5.176471	15
+15	6	4.000000	15
+16	7	3.117647	15
+17	8	4.705883	15
+
+Total Tracks in X-direction: 270  in Y-direction: 270
+
+
+Routing area (in minimum width transistor areas):
+Assuming no buffer sharing (pessimistic). Total: 662149.00000  Per clb: 2291.17310
+Assuming buffer sharing (slightly optimistic). Total: 518350.40625  Per clb: 1793.59998
+
+
+Segment usage by type (index):
+Segment type       Fractional utilization
+------------       ----------------------
+       0                   0.55
+       1                   0.21
+       2                   0.05
+
+Segment usage by length:
+Segment length       Fractional utilization
+--------------       ----------------------
+        1                    0.55
+        2                    0.21
+        4                    0.05
+
+sim: ** simulation statistics **
+sim_num_insn              710408115 # total number of instructions executed
+sim_num_refs              285544971 # total number of loads and stores executed
+sim_elapsed_time                 18 # total simulation time in seconds
+sim_inst_rate          39467117.5000 # simulation speed (in insts/sec)
+sim_num_branches          102646783 # total number of branches executed
+sim_IPB                      6.9209 # instruction per branch
+bpred_bimod.lookups       102646783 # total number of bpred lookups
+bpred_bimod.updates       102646783 # total number of updates
+bpred_bimod.addr_hits      93268919 # total number of address-predicted hits
+bpred_bimod.dir_hits       93305393 # total number of direction-predicted hits (includes addr-hits)
+bpred_bimod.misses          9341390 # total number of misses
+bpred_bimod.jr_hits        12771079 # total number of address-predicted hits for JR's
+bpred_bimod.jr_seen        12831568 # total number of JR's seen
+bpred_bimod.jr_non_ras_hits.PP        85820 # total number of address-predicted hits for non-RAS JR's
+bpred_bimod.jr_non_ras_seen.PP       146206 # total number of non-RAS JR's seen
+bpred_bimod.bpred_addr_rate    0.9086 # branch address-prediction rate (i.e., addr-hits/updates)
+bpred_bimod.bpred_dir_rate    0.9090 # branch direction-prediction rate (i.e., all-hits/updates)
+bpred_bimod.bpred_jr_rate    0.9953 # JR address-prediction rate (i.e., JR addr-hits/JRs seen)
+bpred_bimod.bpred_jr_non_ras_rate.PP    0.5870 # non-RAS JR addr-pred rate (ie, non-RAS JR hits/JRs seen)
+bpred_bimod.retstack_pushes     12685365 # total number of address pushed onto ret-addr stack
+bpred_bimod.retstack_pops     12685362 # total number of address popped off of ret-addr stack
+bpred_bimod.used_ras.PP     12685362 # total number of RAS predictions used
+bpred_bimod.ras_hits.PP     12685259 # total number of RAS hits
+bpred_bimod.ras_rate.PP    1.0000 # RAS prediction rate (i.e., RAS hits/used RAS)
+
